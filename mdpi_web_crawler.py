@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from web_crawler import WebCrawler
 
-
 class MDPIWebCrawler(WebCrawler):
     def __init__(self):
         super().__init__("https://www.mdpi.com/journal/aerospace")
@@ -22,6 +21,7 @@ class MDPIWebCrawler(WebCrawler):
                 for article_url in article_urls:
                     full_url = "https://www.mdpi.com/" + article_url
                     self.download_url(full_url)
+
     def get_article_urls(self, issue_url):
         url_pattern = issue_url[20:]
         print("Getting articles from " + url_pattern)
