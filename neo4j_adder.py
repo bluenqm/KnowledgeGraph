@@ -9,10 +9,14 @@ class Neo4JAdder:
         self.graph = Graph(uri, auth=(user, password))
 
     def add_relation(self, relation, head_span_text, head_span_id, tail_span_text, tail_span_id):
+        if head_span_id == 'id-less':
+            head_span_id = head_span_text
+        if tail_span_id == 'id-less':
+            tail_span_id = tail_span_text
+        if head_span_text == tail_span_text and head_span_id == tail_span_id:
+            return
         h = Node("ENTITY", name=head_span_text, id=head_span_id)
         t = Node("ENTITY", name=tail_span_text, id=tail_span_id)
-        if h == t:
-            return
         self.graph.merge(h, "ENTITY", "id")
         self.graph.merge(t, "ENTITY", "id")
         h_rel_t = Relationship(h, relation, t)
